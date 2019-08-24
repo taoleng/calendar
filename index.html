@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>驴嘟嘟旅游-产品信息</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" type="text/css" href="public.css"/>
+		<script src="fontSize.js"></script>
+		<script>
+			Date.prototype.Format = function (fmt) { //author: meizz 
+			    var o = {
+			        "M+": this.getMonth() + 1, //月份 
+			        "d+": this.getDate(), //日 
+			        "h+": this.getHours(), //小时 
+			        "m+": this.getMinutes(), //分 
+			        "s+": this.getSeconds(), //秒 
+			        "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+			        "S": this.getMilliseconds() //毫秒 
+			    };
+			    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+			    for (var k in o)
+			    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+			    return fmt;
+			}
+		
+		</script>
+		<style>
+			/*body{background: #fff;}*/	
+			.flex{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
+			.flex-v{-webkit-box-orient:vertical;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
+			.flex-1{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;}
+			.flex-align-center{-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
+			.flex-pack-center{-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;}
+			.flex-pack-justify{-webkit-box-pack:justify;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;}
+			.flex-wrap{-webkit-flex-wrap: wrap;flex-wrap: wrap;-ms-flex-wrap: wrap;}
+			.week{font-size: 0.3rem;background: #ccc;font-weight: bold;}
+			.week .week-item{height: 0.8rem;}
+			.week .week-item:last-child,.week .week-item:first-child{color: #009999;}
+			.weekDay{flex-wrap: wrap;-webkit-flex-wrap: wrap;font-size: 0.32rem;}
+			.weekDay .weekDay-item{width: 14.2857%;height: 1.2rem;font-weight: normal;position: relative;}
+			.weekDay .weekDay-item.gray{color: #ccc;}
+			.weekDay .weekDay-item.pink{color: red;font-weight: bold;}
+			.weekDay .weekDay-item.weekend{color: #009999;font-weight: bold;}
+			.weekDay .weekDay-item .money{position: absolute;bottom: 0;left: 0;width: 100%;text-align: center;font-size: 0.24rem;text-indent: -0.08rem;}
+			.weekDay-title{font-size: 0.3rem;color: #333;text-align: center;height: 0.8rem;line-height: 1.1rem;}
+			.week-main{background: #fff;margin-bottom: 0.2rem;}
+			.week-fix{height: 0.8rem;}
+			.week-fix .week{position: fixed;width: 100%;top: 0;left: 0;z-index: 10;}
+		</style>
+	</head>
+	<body>
+		<div class="wrap" id="wxChat" v-cloak>
+			<div class="week-fix">
+				<div class="flex week">
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>日</div></div>
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>一</div></div>
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>二</div></div>
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>三</div></div>
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>四</div></div>
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>五</div></div>
+					<div class="flex flex-1 week-item flex-align-center flex-pack-center"><div>六</div></div>
+				</div>
+			</div>
+			<div v-for="oitem in list" class="week-main">
+				<div class="weekDay-title">{{oitem.title}}</div>
+				<div class="flex weekDay">
+					<div class="flex weekDay-item flex-align-center flex-pack-center" :class='item.cls' v-for="(item,index) in oitem.list" @click="select(item)">
+						<div :class="item.cls">{{item.today ? item.today : (item.festival ? item.festival : item.num)}}</div>
+						<div class="money"></div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<script src="vue.min.js"></script>
+		<script src="dateDetail.js"></script>
+		<script src="calendar.js"></script>
+		<script>
+			
+			var vm = new Vue({
+				el:"#wxChat",
+				data:{
+					list:[]
+				},
+				created:function(){
+					var self = this;
+					var data={
+						"2019-08-23":200,
+						"2019-08-24":200,
+						"2019-08-25":120,
+						"2019-08-26":180,
+						"2019-08-30":150,
+					}
+					self.list = createCalendar(3)
+					console.log(self.list)
+				},
+				methods:{
+					select:function(item){
+						console.log(item)
+					}
+				}
+			})
+			
+			function createCalendar(n){
+				var list = []
+				for (var i = 0;i<n;i++) {
+					list.push(calendar(i))
+				}
+				return list
+			}
+		</script>
+		<script>
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		</script>
+	</body>
+</html>
